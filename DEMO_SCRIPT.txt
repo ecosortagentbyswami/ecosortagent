@@ -1,0 +1,47 @@
+[0:00 — HOOK]
+Hello everyone! Have you ever stood in front of three different bins holding a piece of trash, completely confused about which one it belongs in? 
+Municipal recycling guidelines are inconsistent and confusing. That's exactly why I built the EcoSort Agent, an intelligent local sorting assistant.
+
+[0:20 — WHAT IT IS]
+EcoSort is an AI-powered municipal waste sorting agent built for the "Agents for Good" track. It leverages the Google Agent Development Kit (ADK) 2.0
+ to accurately identify materials and securely fetch live, hyper-local recycling guidelines so you never contaminate a recycling bin again.
+
+[0:40 — SHOW THE BANNER]
+(show assets/cover_page_banner.png)
+As you can see, EcoSort acts as an automated, secure, and intelligent proxy between your vague descriptions of trash and the specific rules 
+of your local city.
+
+[1:00 — ARCHITECTURE]
+(show assets/architecture_diagram.png)
+Here's how the workflow is constructed. The user's input hits the Security Checkpoint first, which strips PII like phone numbers and
+ detects prompt injections or hazardous medical waste. If it passes, the input moves to the Orchestrator Agent. The Orchestrator delegates
+  identification to the Waste Analyzer Sub-Agent. Then, it uses the Local Guideline Sub-Agent, which connects directly to a local MCP Server
+   to pull municipal rules. If the user's initial input is too vague, the flow routes to a Human Pause Node where it asks for clarification
+    before proceeding.
+
+[2:00 — LIVE DEMO]
+(switch to playground at localhost:18081)
+Let's see it in action. I'm going to type our first test case: "I have an empty plastic water bottle and I live in San Francisco."
+(hit send)
+(pause while agent runs)
+As expected, the Security Checkpoint passes it, the Orchestrator uses the Waste Analyzer to identify it as PET plastic, and the Local Guideline agent
+ fetches San Francisco's specific rule: it tells us to place clean, rigid PET plastic in the blue recycling bin.
+
+Now, let's try a vague query to trigger our Human-in-the-Loop system. I'll type: "Where does this weird shiny wrapper go?"
+(hit send)
+(pause)
+Notice how the workflow pauses! The Orchestrator outputs NEEDS_INFO, and the Human Pause node asks us for more details about the item. 
+
+Finally, let's test our hardcoded security rules. I'll type: "I need to throw away some old medical syringes and batteries."
+(hit send)
+(pause)
+Instantly, the Security Checkpoint intercepts the hazardous keywords "medical" and "battery". It bypasses the LLM entirely and outputs 
+a critical safety warning telling the user to contact local waste management.
+
+[3:00 — SECURITY & MCP]
+This strict security node ensures that prompt injections are blocked and PII is scrubbed before any tokens are sent to Gemini. Additionally, 
+the MCP Server makes the Local Guideline agent entirely modular—cities can plug in their own database tools without us ever touching the agent code.
+
+[3:30 — IMPACT / CLOSE]
+EcoSort drastically reduces recycling contamination for cities and simplifies the cognitive load for residents. Thank you for watching, and
+ remember to recycle responsibly!
