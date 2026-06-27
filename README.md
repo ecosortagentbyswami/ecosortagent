@@ -72,44 +72,6 @@ Here are three test cases specific to EcoSort to verify its behavior:
 - **Expected**: The Security Checkpoint detects hazardous keywords ("medical", "battery"). The workflow immediately routes to the security_event terminal node, bypassing the LLM.
 - **Check**: The playground UI outputs the safety warning: *"Safety Warning: Hazardous or medical waste (e.g., batteries, syringes) must not go in standard bins..."*
 
-## Troubleshooting
 
-1. **Error**: `ValueError: No root_agent found for 'app'`
-   - **Fix**: The ADK 2.0 Web CLI requires the workflow instance to be named `root_agent` and exported in `app/__init__.py`. Ensure `app/agent.py` declares `root_agent = Workflow(...)`.
 
-2. **Error**: `Error: 'State' object has no attribute 'user_input'` or `BaseNode.run() missing 1 required keyword-only argument: 'ctx'`
-   - **Fix**: In ADK 2.0, state must be accessed using dict lookups like `ctx.state.get("user_input")` rather than attributes. Ensure you are not running older ADK 1.x syntax.
 
-3. **Playground UI is unresponsive or says "Failed to fetch"**
-   - **Fix**: The local Uvicorn server might have crashed in the background. Check your terminal output for stack traces, or stop it (Ctrl+C) and run `make playground` again.
-
-## Push to GitHub
-
-1. Create a new repo at https://github.com/new
-   - Name: ecosort-agent
-   - Visibility: Public or Private
-   - Do NOT initialize with README (you already have one)
-
-2. In your terminal, navigate into your project folder:
-   ```bash
-   cd ecosort-agent
-   git init
-   git add .
-   git commit -m "Initial commit: ecosort-agent ADK agent"
-   git branch -M main
-   git remote add origin https://github.com/<your-username>/ecosort-agent.git
-   git push -u origin main
-   ```
-
-3. Verify `.gitignore` includes:
-   ```
-   .env          ← your API key — must NEVER be pushed
-   .venv/
-   __pycache__/
-   *.pyc
-   .adk/
-   ```
-   ⚠ NEVER push `.env` to GitHub. Your API key will be exposed publicly.
-
-## Demo Script
-A complete walkthrough and presentation script can be found in [DEMO_SCRIPT.txt](DEMO_SCRIPT.txt).
