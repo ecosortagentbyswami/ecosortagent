@@ -83,33 +83,4 @@ Here are three test cases specific to EcoSort to verify its behavior:
 3. **Playground UI is unresponsive or says "Failed to fetch"**
    - **Fix**: The local Uvicorn server might have crashed in the background. Check your terminal output for stack traces, or stop it (Ctrl+C) and run `make playground` again.
 
-## Push to GitHub
-
-1. Create a new repo at https://github.com/new
-   - Name: ecosort-agent
-   - Visibility: Public or Private
-   - Do NOT initialize with README (you already have one)
-
-2. In your terminal, navigate into your project folder:
-   ```bash
-   cd ecosort-agent
-   git init
-   git add .
-   git commit -m "Initial commit: ecosort-agent ADK agent"
-   git branch -M main
-   git remote add origin https://github.com/<your-username>/ecosort-agent.git
-   git push -u origin main
-   ```
-
-3. Verify `.gitignore` includes:
-   ```
-   .env          ← your API key — must NEVER be pushed
-   .venv/
-   __pycache__/
-   *.pyc
-   .adk/
-   ```
-   ⚠ NEVER push `.env` to GitHub. Your API key will be exposed publicly.
-
-## Demo Script
 A complete walkthrough and presentation script can be found in [DEMO_SCRIPT.txt](DEMO_SCRIPT.txt).
